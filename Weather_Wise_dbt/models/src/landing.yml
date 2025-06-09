@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: landing
+    tables:
+      - name: land_obs_daily
+      - name: land_obs_hourly
+      - name: land_obs_stations
+      - name: land_city_coord
+      - name: land_city_pop
+      - name: land_obs_load_log

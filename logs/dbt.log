@@ -1,0 +1,29 @@
+[0m15:41:55.361749 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002580D4F09D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002580E593BB0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002580E593940>]}
+
+
+============================== 15:41:55.365841 | eb941c2b-4052-47c1-b2c7-87fd823d6156 ==============================
+[0m15:41:55.365841 [info ] [MainThread]: Running with dbt=1.9.4
+[0m15:41:55.365841 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\bkl53\\.dbt', 'version_check': 'True', 'warn_error': 'None', 'log_path': 'logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'invocation_command': 'dbt init Weather-Wise_dbt', 'static_parser': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m15:42:13.625296 [debug] [MainThread]: Starter project path: C:\Program Files\Python310\lib\site-packages\dbt\include\starter_project
+[0m15:42:13.676424 [info ] [MainThread]: 
+Your new dbt project "Weather_Wise_dbt" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m15:42:13.677179 [info ] [MainThread]: Setting up your profile.
+[0m15:42:21.022391 [info ] [MainThread]: Profile Weather_Wise_dbt written to C:\Users\bkl53\.dbt\profiles.yml using target's sample configuration. Once updated, you'll be able to start developing with dbt.
+[0m15:42:21.024374 [debug] [MainThread]: Command `dbt init` succeeded at 15:42:21.024374 after 25.71 seconds
+[0m15:42:21.025876 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002580D4F09D0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002580E5938E0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002580E588EB0>]}
+[0m15:42:21.026323 [debug] [MainThread]: Flushing usage events
+[0m15:42:21.408225 [debug] [MainThread]: An error was encountered while trying to flush usage events
