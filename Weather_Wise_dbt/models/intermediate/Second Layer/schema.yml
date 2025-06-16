@@ -1,0 +1,97 @@
+version: 2
+
+models:
+  - name: int2_obs_daily_all
+    description: |
+      Combine and reconcile daily observations (`stg_obs_daily`) with
+      hourly-aggregated metrics (`int1_obs_hourly_day_sum`), and include
+      QA flags indicating the source of each metric and whether daily vs.
+      hourly values match when both are present.
+    columns:
+      - name: station_date_id
+        description: "Surrogate key for each station + date record"
+        tests:
+          - unique
+          - not_null
+
+      - name: station_id
+        description: "Unique identifier for the weather station"
+        tests:
+          - not_null
+
+      - name: obs_date
+        description: "Observation date (UTC)"
+        tests:
+          - not_null
+
+      # Combined metrics
+      - name: avg_temp_c
+        description: "Average temperature in Celsius (daily or hourly)"
+      - name: min_temp_c
+        description: "Minimum temperature in Celsius (daily or hourly)"
+      - name: max_temp_c
+        description: "Maximum temperature in Celsius (daily or hourly)"
+      - name: avg_dwpt_c
+        description: "Average dew point in Celsius (from hourly aggregates)"
+      - name: avg_dwpt_f
+        description: "Average dew point in Fahrenheit (from hourly aggregates)"
+      - name: avg_rhum_pct
+        description: "Average relative humidity (%) (from hourly aggregates)"
+      - name: precipitation_mm
+        description: "Total precipitation in millimeters (daily or hourly)"
+      - name: snow_mm
+        description: "Total snowfall in millimeters (daily or hourly)"
+      - name: wind_dir_degrees
+        description: "Wind direction in degrees (daily or hourly)"
+      - name: wind_speed_km_h
+        description: "Wind speed in km/h (daily or hourly)"
+      - name: wind_peak_gust_km_h
+        description: "Peak gust wind speed in km/h (daily or hourly)"
+      - name: air_pressure_hpa
+        description: "Sea-level air pressure in hPa (daily or hourly)"
+      - name: sunshine_minutes
+        description: "Sunshine duration in minutes (daily or hourly)"
+
+      # Source indicators
+      - name: avg_temp_c_source
+        description: "Data source for avg_temp_c: 'daily', 'hourly', or 'both'"
+      - name: min_temp_c_source
+        description: "Data source for min_temp_c: 'daily', 'hourly', or 'both'"
+      - name: max_temp_c_source
+        description: "Data source for max_temp_c: 'daily', 'hourly', or 'both'"
+      - name: precipitation_mm_source
+        description: "Data source for precipitation_mm: 'daily', 'hourly', or 'both'"
+      - name: snow_mm_source
+        description: "Data source for snow_mm: 'daily', 'hourly', or 'both'"
+      - name: wind_dir_degrees_source
+        description: "Data source for wind_dir_degrees: 'daily', 'hourly', or 'both'"
+      - name: wind_speed_km_h_source
+        description: "Data source for wind_speed_km_h: 'daily', 'hourly', or 'both'"
+      - name: wind_peak_gust_km_h_source
+        description: "Data source for wind_peak_gust_km_h: 'daily', 'hourly', or 'both'"
+      - name: air_pressure_hpa_source
+        description: "Data source for air_pressure_hpa: 'daily', 'hourly', or 'both'"
+      - name: sunshine_minutes_source
+        description: "Data source for sunshine_minutes: 'daily', 'hourly', or 'both'"
+
+      # Match indicators
+      - name: avg_temp_c_match
+        description: "TRUE if avg_temp_c from daily and hourly are equal when both exist, FALSE if they differ"
+      - name: min_temp_c_match
+        description: "TRUE if min_temp_c from daily and hourly are equal when both exist, FALSE if they differ"
+      - name: max_temp_c_match
+        description: "TRUE if max_temp_c from daily and hourly are equal when both exist, FALSE if they differ"
+      - name: precipitation_mm_match
+        description: "TRUE if precipitation_mm from daily and hourly match when both exist, FALSE otherwise"
+      - name: snow_mm_match
+        description: "TRUE if snow_mm from daily and hourly match when both exist, FALSE otherwise"
+      - name: wind_dir_degrees_match
+        description: "TRUE if wind_dir_degrees from daily and hourly match when both exist, FALSE otherwise"
+      - name: wind_speed_km_h_match
+        description: "TRUE if wind_speed_km_h from daily and hourly match when both exist, FALSE otherwise"
+      - name: wind_peak_gust_km_h_match
+        description: "TRUE if wind_peak_gust_km_h from daily and hourly match when both exist, FALSE otherwise"
+      - name: air_pressure_hpa_match
+        description: "TRUE if air_pressure_hpa from daily and hourly match when both exist, FALSE otherwise"
+      - name: sunshine_minutes_match
+        description: "TRUE if sunshine_minutes from daily and hourly match when both exist, FALSE otherwise"
