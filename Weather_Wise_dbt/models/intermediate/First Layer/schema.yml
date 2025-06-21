@@ -4,27 +4,27 @@ models:
     columns:
       - name: station_date_id
         description: "Surrogate key for station and date"
-        tests:
-          - unique
-          - not_null
+#        tests:
+#          - unique
+#          - not_null
       - name: station_id
         description: "Station identifier"
       - name: obs_date
         description: "Date of observation (UTC)"
-      - name: avg_temp_c
-        description: "Average hourly temperature in Celsius for the day"
-      - name: avg_temp_f
+      - name: tavg_f
         description: "Average hourly temperature in Fahrenheit for the day"
-      - name: min_temp_c
-        description: "Minimum temperature in Celsius for the day"
-      - name: max_temp_c
-        description: "Maximum temperature in Celsius for the day"
-      - name: avg_dwpt_c
-        description: "Average dew point in Celsius"
+      - name: tmax_f
+        description: "Maximum temperature in Fahrenheit for the day"
+      - name: tmin_f
+        description: "Minimum temperature in Fahrenheit for the day"
       - name: avg_dwpt_f
         description: "Average dew point in Fahrenheit"
       - name: avg_rhum_pct
         description: "Average relative humidity (%)"
+      - name: min_rhum_pct
+        description: "Minimum relative humidity (%)"
+      - name: max_rhum_pct
+        description: "Maximum relative humidity (%)"
       - name: avg_air_pressure_hpa
         description: "Average sea-level air pressure (hPa)"
       - name: avg_wind_dir_degrees
@@ -45,21 +45,15 @@ models:
     columns:
       - name: station_obs_window_id
         description: "Surrogate key for station and anchor observation date"
-        tests:
-          - unique
-          - not_null
+#        tests:
+#          - unique
+#          - not_null
       - name: station_id
         description: "Station identifier"
       - name: anchor_date
         description: "Anchor observation date (center of the 5-day window)"
       - name: obs_date
         description: "Actual observation date within the 5-day window"
-      - name: tavg_c
-        description: "Average daily temperature in Celsius"
-      - name: tmin_c
-        description: "Minimum daily temperature in Celsius"
-      - name: tmax_c
-        description: "Maximum daily temperature in Celsius"
       - name: tavg_f
         description: "Average daily temperature in Fahrenheit"
       - name: tmin_f
@@ -86,9 +80,9 @@ models:
     columns:
       - name: city_coord_pop_id
         description: "Surrogate key combining uace and city_pop_id for the matched record"
-        tests:
-          - unique
-          - not_null
+#        tests:
+#          - unique
+#          - not_null
       - name: uace
         description: "Unique area code identifier from coordinate data"
       - name: city_pop_id

@@ -7,8 +7,8 @@ with raw as (
     select
       time                             as obs_time,
       station_id,
-      temp                             as temp_c,
-      dwpt                             as dwpt_c,
+      {{ c_to_f('temp') }}             as temp_f,
+      {{ c_to_f('dwpt') }}             as dwpt_f,
       rhum                             as rhum_pct,
       prcp                             as precipitation_mm,
       snow                             as snow_mm,
@@ -18,8 +18,6 @@ with raw as (
       pres                             as air_pressure_hpa,
       tsun                             as sunshine_minutes,
       coco                             as weather_condition_code,
-      {{ c_to_f('temp') }}             as temp_f,
-      {{ c_to_f('dwpt') }}             as dwpt_f,
       {{ dbt_utils.generate_surrogate_key(['station_id', 'obs_time']) }} as station_time_id
     from {{ source('landing', 'land_obs_hourly') }}
 ),

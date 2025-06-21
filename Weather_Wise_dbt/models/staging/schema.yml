@@ -1,8 +1,9 @@
+version: 2
 models:
   - name: stg_obs_daily
     description: "daily weather observations data"
     columns:
-      - name: obs_daily_id
+      - name: station_date_id
         description: "Surrogate key generated from station_id and observation date"
         tests:
           - unique
@@ -13,12 +14,6 @@ models:
           - not_null
       - name: station_id
         description: "Unique identifier for the weather station"
-      - name: tavg_c
-        description: "Average daily temperature in Celsius"
-      - name: tmin_c
-        description: "Minimum daily temperature in Celsius"
-      - name: tmax_c
-        description: "Maximum daily temperature in Celsius"
       - name: tavg_f
         description: "Average daily temperature in Fahrenheit"
       - name: tmin_f
@@ -95,10 +90,10 @@ models:
           - not_null
       - name: station_id
         description: "Unique identifier for the weather station"
-      - name: temp_c
-        description: "Air temperature in Celsius"
-      - name: dwpt_c
-        description: "Dew point temperature in Celsius"
+      - name: temp_f
+        description: "Air temperature in Fahrenheit"
+      - name: dwpt_f
+        description: "Dew point temperature in Fahrenheit"
       - name: rhum_pct
         description: "Relative humidity in percent"
       - name: precipitation_mm
@@ -146,16 +141,6 @@ models:
   - name: stg_city_pop
     description: "Cleaned and standardized city population data"
     columns:
-      - name: city_name
-        description: "Name of the geographic area (city)"
-        tests:
-          - not_null
-      - name: population_2023
-        description: "Population count as of 2023"
-
-  - name: stg_city_pop
-    description: "Cleaned and standardized city population data"
-    columns:
       - name: city_pop_id
         description: "Surrogate key generated from row order; uniquely identifies each city population record"
         tests:
@@ -167,5 +152,3 @@ models:
           - not_null
       - name: population_2023
         description: "Population count as of 2023"
-      - name: last_load_time
-        description: "Timestamp when the population data was last loaded"

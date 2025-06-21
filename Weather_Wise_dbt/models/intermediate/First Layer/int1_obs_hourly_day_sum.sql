@@ -7,9 +7,7 @@ with hourly as (
     select
       station_id,
       cast(obs_time as date) as obs_date,
-      temp_c,
       temp_f,
-      dwpt_c,
       dwpt_f,
       rhum_pct,
       precipitation_mm,
@@ -27,15 +25,15 @@ aggregated as (
       station_id,
       obs_date,
       -- temperature
-      avg(temp_c) as avg_temp_c,
-      avg(temp_f) as avg_temp_f,
-      min(temp_c) as min_temp_c,
-      max(temp_c) as max_temp_c,
+      avg(temp_f) as tavg_f,
+      min(temp_f) as tmin_f,
+      max(temp_f) as tmax_f,
       -- dew point
-      avg(dwpt_c) as avg_dwpt_c,
       avg(dwpt_f) as avg_dwpt_f,
       -- humidity & pressure
       avg(rhum_pct)        as avg_rhum_pct,
+      min(rhum_pct)        as min_rhum_pct,
+      max(rhum_pct)        as max_rhum_pct,
       avg(air_pressure_hpa) as avg_air_pressure_hpa,
       -- wind
       avg(wind_dir_degrees)     as avg_wind_dir_degrees,
