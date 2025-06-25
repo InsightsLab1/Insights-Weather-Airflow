@@ -53,16 +53,17 @@ base as (
     d.air_pressure_hpa_source,
     d.sunshine_minutes_source,
 
-    d.tavg_f_diff_pct     is not null as tavg_f_match,
-    d.tmin_f_diff_pct     is not null as tmin_f_match,
-    d.tmax_f_diff_pct     is not null as tmax_f_match,
-    d.precipitation_mm_diff_pct  is not null as precipitation_mm_match,
-    d.snow_mm_diff_pct    is not null as snow_mm_match,
-    d.wind_dir_degrees_diff_pct  is not null as wind_dir_degrees_match,
-    d.wind_speed_km_h_diff_pct   is not null as wind_speed_km_h_match,
-    d.wind_peak_gust_km_h_diff_pct is not null as wind_peak_gust_km_h_match,
-    d.air_pressure_hpa_diff_pct  is not null as air_pressure_hpa_match,
-    d.sunshine_minutes_diff_pct  is not null as sunshine_minutes_match
+    case when d.tavg_f_diff_pct is not null and abs(d.tavg_f_diff_pct) >= 0.05 then 0 else 1 end as tavg_f_match,
+
+    case when d.tmin_f_diff_pct is not null and abs(d.tmin_f_diff_pct) >= 0.05 then 0 else 1 end as tmin_f_match,
+    case when d.tmax_f_diff_pct is not null and abs(d.tmax_f_diff_pct) >= 0.05 then 0 else 1 end as tmax_f_match,
+    case when d.precipitation_mm_diff_pct is not null and abs(d.precipitation_mm_diff_pct) >= 0.05 then 0 else 1 end as precipitation_mm_match,
+    case when d.snow_mm_diff_pct is not null and abs(d.snow_mm_diff_pct) >= 0.05 then 0 else 1 end as snow_mm_match,
+    case when d.wind_dir_degrees_diff_pct is not null and abs(d.wind_dir_degrees_diff_pct) >= 0.05 then 0 else 1 end as wind_dir_degrees_match,
+    case when d.wind_speed_km_h_diff_pct is not null and abs(d.wind_speed_km_h_diff_pct) >= 0.05 then 0 else 1 end as wind_speed_km_h_match,
+    case when d.wind_peak_gust_km_h_diff_pct is not null and abs(d.wind_peak_gust_km_h_diff_pct) >= 0.05 then 0 else 1 end as wind_peak_gust_km_h_match,
+    case when d.air_pressure_hpa_diff_pct is not null and abs(d.air_pressure_hpa_diff_pct) >= 0.05 then 0 else 1 end as air_pressure_hpa_match,
+    case when d.sunshine_minutes_diff_pct is not null and abs(d.sunshine_minutes_diff_pct) >= 0.05 then 0 else 1 end as sunshine_minutes_match,
 
   from daily_all d
   full join hourly_sum h

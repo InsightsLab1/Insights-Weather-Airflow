@@ -109,35 +109,35 @@ left_part as (
            when hs.total_sunshine_minutes is not null then 'hourly' end as sunshine_minutes_source,
 
       -- Percent diffs with divide-by-zero protection
-      case when d.tavg_f is not null and hs.hs_tavg_f is not null and d.tavg_f != 0
-           then (hs.hs_tavg_f - d.tavg_f) / d.tavg_f * 100 end as tavg_f_diff_pct,
+      case when d.tavg_f is not null and hs.hs_tavg_f is not null
+           then (hs.hs_tavg_f - d.tavg_f) / d.tavg_f  end as tavg_f_diff_pct,
 
-      case when d.tmin_f is not null and hs.hs_tmin_f is not null and d.tmin_f != 0
-           then (hs.hs_tmin_f - d.tmin_f) / d.tmin_f * 100 end as tmin_f_diff_pct,
+      case when d.tmin_f is not null and hs.hs_tmin_f is not null 
+           then (hs.hs_tmin_f - d.tmin_f) / d.tmin_f end as tmin_f_diff_pct,
 
-      case when d.tmax_f is not null and hs.hs_tmax_f is not null and d.tmax_f != 0
-           then (hs.hs_tmax_f - d.tmax_f) / d.tmax_f * 100 end as tmax_f_diff_pct,
+      case when d.tmax_f is not null and hs.hs_tmax_f is not null
+           then (hs.hs_tmax_f - d.tmax_f) / d.tmax_f  end as tmax_f_diff_pct,
 
-      case when d.precipitation_mm is not null and hs.total_precip_mm is not null and d.precipitation_mm != 0
-           then (hs.total_precip_mm - d.precipitation_mm) / d.precipitation_mm * 100 end as precipitation_mm_diff_pct,
+      case when d.precipitation_mm is not null and hs.total_precip_mm is not null 
+           then (hs.total_precip_mm - d.precipitation_mm) / d.precipitation_mm end as precipitation_mm_diff_pct,
 
-      case when d.snow_mm is not null and hs.total_snow_mm is not null and d.snow_mm != 0
-           then (hs.total_snow_mm - d.snow_mm) / d.snow_mm * 100 end as snow_mm_diff_pct,
+      case when d.snow_mm is not null and hs.total_snow_mm is not null
+           then (hs.total_snow_mm - d.snow_mm) / d.snow_mm  end as snow_mm_diff_pct,
 
-      case when d.wind_dir_degrees is not null and hs.avg_wind_dir_degrees is not null and d.wind_dir_degrees != 0
-           then (hs.avg_wind_dir_degrees - d.wind_dir_degrees) / d.wind_dir_degrees * 100 end as wind_dir_degrees_diff_pct,
+      case when d.wind_dir_degrees is not null and hs.avg_wind_dir_degrees is not null
+           then (hs.avg_wind_dir_degrees - d.wind_dir_degrees) / d.wind_dir_degrees  end as wind_dir_degrees_diff_pct,
 
-      case when d.wind_speed_km_h is not null and hs.avg_wind_speed_km_h is not null and d.wind_speed_km_h != 0
-           then (hs.avg_wind_speed_km_h - d.wind_speed_km_h) / d.wind_speed_km_h * 100 end as wind_speed_km_h_diff_pct,
+      case when d.wind_speed_km_h is not null and hs.avg_wind_speed_km_h is not null
+           then (hs.avg_wind_speed_km_h - d.wind_speed_km_h) / d.wind_speed_km_h end as wind_speed_km_h_diff_pct,
 
-      case when d.wind_peak_gust_km_h is not null and hs.max_wind_peak_gust_km_h is not null and d.wind_peak_gust_km_h != 0
-           then (hs.max_wind_peak_gust_km_h - d.wind_peak_gust_km_h) / d.wind_peak_gust_km_h * 100 end as wind_peak_gust_km_h_diff_pct,
+      case when d.wind_peak_gust_km_h is not null and hs.max_wind_peak_gust_km_h is not null
+           then (hs.max_wind_peak_gust_km_h - d.wind_peak_gust_km_h) / d.wind_peak_gust_km_h end as wind_peak_gust_km_h_diff_pct,
 
-      case when d.air_pressure_hpa is not null and hs.avg_air_pressure_hpa is not null and d.air_pressure_hpa != 0
-           then (hs.avg_air_pressure_hpa - d.air_pressure_hpa) / d.air_pressure_hpa * 100 end as air_pressure_hpa_diff_pct,
+      case when d.air_pressure_hpa is not null and hs.avg_air_pressure_hpa is not null
+           then (hs.avg_air_pressure_hpa - d.air_pressure_hpa) / d.air_pressure_hpa end as air_pressure_hpa_diff_pct,
 
-      case when d.sunshine_minutes is not null and hs.total_sunshine_minutes is not null and d.sunshine_minutes != 0
-           then (hs.total_sunshine_minutes - d.sunshine_minutes) / d.sunshine_minutes * 100 end as sunshine_minutes_diff_pct
+      case when d.sunshine_minutes is not null and hs.total_sunshine_minutes is not null 
+           then (hs.total_sunshine_minutes - d.sunshine_minutes) / d.sunshine_minutes end as sunshine_minutes_diff_pct
 
     from daily d
     left join hourly_sum hs
