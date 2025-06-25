@@ -5,9 +5,11 @@
 name: 'Weather_Wise_dbt'
 version: '1.9.4'
 
-
 # This setting configures which "profile" dbt uses for this project.
 profile: 'Weather_Wise_dbt'  
+
+vars:
+  parquet_dir: "C:\\Data Projects\\Weather Data Project\\Data Lakehouse\\parquet"
 
 # These configurations specify where dbt should look for different types of files.
 # The `model-paths` config, for example, states that models in this project can be
@@ -32,6 +34,13 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   Weather_Wise_dbt:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+    # Config indicated by + and applies to all files under models/marts/
+    marts:
+      +materialized: table
+      +post-hook: 
+          - |
+            COPY (
+              SELECT * FROM {{ this }}
+            )
+            TO '{{ var("parquet_dir") }}/{{ this.name }}.parquet'
+            (FORMAT PARQUET);
