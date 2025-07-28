@@ -1,0 +1,148 @@
+version: 2
+
+sources:
+  - name: landing
+    database: "{{ target.database }}"  # defaults to your DuckDB file
+    schema: "{{ target.schema }}"      # resolves to "main" in DuckDB
+    tables:
+      - name: land_obs_daily
+        description: "Raw daily weather observations from the Meteostat API"
+        columns:
+          - name: time
+            description: "Timestamp of the daily observation (UTC), nanosecond precision"
+          - name: tavg
+            description: "Average daily temperature in Celsius"
+          - name: tmin
+            description: "Minimum daily temperature in Celsius"
+          - name: tmax
+            description: "Maximum daily temperature in Celsius"
+          - name: prcp
+            description: "Total daily precipitation in millimeters"
+          - name: snow
+            description: "Total daily snowfall in millimeters"
+          - name: wdir
+            description: "Average daily wind direction in degrees"
+          - name: wspd
+            description: "Average daily wind speed in kilometers per hour"
+          - name: wpgt
+            description: "Peak gust wind speed in kilometers per hour"
+          - name: pres
+            description: "Average sea-level air pressure in hectopascals"
+          - name: tsun
+            description: "Total daily sunshine duration in minutes"
+          - name: station_id
+            description: "Unique identifier for the weather station"
+          - name: load_time
+            description: "Timestamp when the data was loaded into the landing table"
+      - name: land_obs_hourly
+        description: "Raw hourly weather observations from the Meteostat API"
+        columns:
+          - name: time
+            description: "Timestamp of the hourly observation (UTC), nanosecond precision"
+          - name: temp
+            description: "Air temperature in Celsius"
+          - name: dwpt
+            description: "Dew point temperature in Celsius"
+          - name: rhum
+            description: "Relative humidity as a percentage"
+          - name: prcp
+            description: "Precipitation amount in millimeters for the hour"
+          - name: snow
+            description: "Snowfall amount in millimeters for the hour"
+          - name: wdir
+            description: "Wind direction in degrees"
+          - name: wspd
+            description: "Wind speed in kilometers per hour"
+          - name: wpgt
+            description: "Peak gust wind speed in kilometers per hour"
+          - name: pres
+            description: "Sea-level air pressure in hectopascals"
+          - name: tsun
+            description: "Sunshine duration in minutes for the hour"
+          - name: coco
+            description: "Weather condition code"
+          - name: station_id
+            description: "Unique identifier for the weather station"
+          - name: load_time
+            description: "Timestamp when the data was loaded into the landing table"
+      - name: land_obs_stations
+        description: "Metadata for weather observation stations"
+        columns:
+          - name: id
+            description: "Primary station identifier"
+          - name: name
+            description: "Full station name"
+          - name: country
+            description: "ISO country code where the station is located"
+          - name: region
+            description: "State or region code"
+          - name: wmo
+            description: "World Meteorological Organization station number"
+          - name: icao
+            description: "ICAO airport code"
+          - name: latitude
+            description: "Station latitude in decimal degrees"
+          - name: longitude
+            description: "Station longitude in decimal degrees"
+          - name: elevation
+            description: "Station elevation in meters above sea level"
+          - name: timezone
+            description: "IANA timezone of the station"
+          - name: hourly_start
+            description: "Date when hourly data begins for this station"
+          - name: hourly_end
+            description: "Date when hourly data ends for this station"
+          - name: daily_start
+            description: "Date when daily data begins for this station"
+          - name: daily_end
+            description: "Date when daily data ends for this station"
+          - name: monthly_start
+            description: "Date when monthly data begins for this station"
+          - name: monthly_end
+            description: "Date when monthly data ends for this station"
+          - name: snapshot_time
+            description: "Timestamp when station metadata was last updated"
+      - name: land_city_coord
+        description: "City geographic coordinates from Excel import"
+        columns:
+          - name: UACE
+            description: "Unique area code identifier"
+          - name: GEOID
+            description: "Geographic identifier code"
+          - name: GEOID_2
+            description: "Alternate geographic identifier"
+          - name: NAME
+            description: "Primary city name"
+          - name: NAME_2
+            description: "Secondary or alternative city name"
+          - name: AREA_LAND
+            description: "Land area of the city in square meters"
+          - name: AREA_WATER
+            description: "Water area of the city in square meters"
+          - name: LATITUDE
+            description: "City centroid latitude in decimal degrees"
+          - name: LONGITUDE
+            description: "City centroid longitude in decimal degrees"
+          - name: last_load_time
+            description: "Timestamp when city coordinates were last loaded"
+      - name: land_city_pop
+        description: "City population figures from Excel import"
+        columns:
+          - name: Rank
+            description: "Rank of the city by population"
+          - name: Geographic_Area
+            description: "Name of the geographic area (city)"
+          - name: Population_In_2023
+            description: "Population count as of 2023"
+          - name: last_load_time
+            description: "Timestamp when population data was last loaded"
+      - name: land_obs_load_log
+        description: "Log of last fetch times per station and table"
+        columns:
+          - name: station_id
+            description: "Identifier for the station whose data was fetched"
+          - name: last_fetched
+            description: "Timestamp when the station's data was last fetched"
+          - name: table_name
+            description: "Name of the landing table that was fetched"
+

@@ -1,0 +1,154 @@
+version: 2
+models:
+  - name: stg_obs_daily
+    description: "daily weather observations data"
+    columns:
+      - name: station_date_id
+        description: "Surrogate key generated from station_id and observation date"
+        tests:
+          - unique
+          - not_null
+      - name: obs_date
+        description: "Date of the daily observation (UTC)"
+        tests:
+          - not_null
+      - name: station_id
+        description: "Unique identifier for the weather station"
+      - name: tavg_f
+        description: "Average daily temperature in Fahrenheit"
+      - name: tmin_f
+        description: "Minimum daily temperature in Fahrenheit"
+      - name: tmax_f
+        description: "Maximum daily temperature in Fahrenheit"
+      - name: precipitation_mm
+        description: "Total daily precipitation in millimeters"
+      - name: snow_mm
+        description: "Total daily snowfall in millimeters"
+      - name: wind_dir_degrees
+        description: "Average daily wind direction in degrees"
+      - name: wind_speed_km_h
+        description: "Average daily wind speed in kilometers per hour"
+      - name: wind_peak_gust_km_h
+        description: "Peak gust wind speed in kilometers per hour"
+      - name: air_pressure_hpa
+        description: "Average sea-level air pressure in hectopascals"
+      - name: sunshine_minutes
+        description: "Total daily sunshine duration in minutes"
+
+  - name: stg_obs_stations
+    description: "observation stations data"
+    columns:
+      - name: station_id
+        description: "Unique identifier for the weather station"
+        tests:
+          - unique
+          - not_null
+      - name: station_name
+        description: "Full name of the station"
+      - name: country_code
+        description: "ISO country code where the station is located"
+      - name: region_code
+        description: "State or regional administrative area code"
+      - name: wmo_id
+        description: "World Meteorological Organization station identifier"
+      - name: icao_code
+        description: "ICAO airport station identifier"
+      - name: latitude
+        description: "Latitude of the station in decimal degrees"
+      - name: longitude
+        description: "Longitude of the station in decimal degrees"
+      - name: elevation
+        description: "Elevation of the station in meters above sea level"
+      - name: timezone
+        description: "IANA timezone name where the station is located"
+      - name: hourly_start_date
+        description: "First available date of hourly data for this station"
+      - name: hourly_end_date
+        description: "Last available date of hourly data for this station"
+      - name: daily_start_date
+        description: "First available date of daily data for this station"
+      - name: daily_end_date
+        description: "Last available date of daily data for this station"
+      - name: monthly_start_date
+        description: "First available date of monthly data for this station"
+      - name: monthly_end_date
+        description: "Last available date of monthly data for this station"
+      - name: snapshot_time
+        description: "Timestamp when the station data was last refreshed"
+
+  - name: stg_obs_hourly
+    description: "hourly weather observations"
+    columns:
+      - name: station_time_id
+        description: "Surrogate key generated from station_id and hourly timestamp"
+        tests:
+          - unique
+          - not_null
+      - name: obs_time
+        description: "Timestamp of the hourly observation (UTC)"
+        tests:
+          - not_null
+      - name: station_id
+        description: "Unique identifier for the weather station"
+      - name: temp_f
+        description: "Air temperature in Fahrenheit"
+      - name: dwpt_f
+        description: "Dew point temperature in Fahrenheit"
+      - name: rhum_pct
+        description: "Relative humidity in percent"
+      - name: precipitation_mm
+        description: "Hourly precipitation in millimeters"
+      - name: snow_mm
+        description: "Hourly snowfall in millimeters"
+      - name: wind_dir_degrees
+        description: "Wind direction in degrees"
+      - name: wind_speed_km_h
+        description: "Wind speed in kilometers per hour"
+      - name: wind_peak_gust_km_h
+        description: "Peak gust wind speed in kilometers per hour"
+      - name: air_pressure_hpa
+        description: "Sea-level air pressure in hectopascals"
+      - name: sunshine_minutes
+        description: "Sunshine duration in minutes for the hour"
+      - name: weather_condition_code
+        description: "Weather condition code provided by the source"
+
+  - name: stg_city_coord
+    description: "city geographic coordinate data"
+    columns:
+      - name: uace
+        description: "Unique area code identifier"
+        tests:
+          - unique
+          - not_null
+      - name: geoid
+        description: "Geographic identifier code"
+      - name: geoid_2
+        description: "Alternate geographic identifier"
+      - name: city_name
+        description: "Primary name of the city"
+      - name: city_name_alt
+        description: "Alternate name or variation of the city"
+      - name: area_land_sqm
+        description: "Land area of the city in square meters"
+      - name: area_water_sqm
+        description: "Water area of the city in square meters"
+      - name: latitude
+        description: "Latitude of the city centroid in decimal degrees"
+      - name: longitude
+        description: "Longitude of the city centroid in decimal degrees"
+
+  - name: stg_city_pop
+    description: "Cleaned and standardized city population data"
+    columns:
+      - name: city_pop_id
+        description: "Surrogate key generated from row order; uniquely identifies each city population record"
+        tests:
+          - unique
+          - not_null
+      - name: city_name
+        description: "Name of the geographic area (city)"
+        tests:
+          - not_null
+      - name: population_2023
+        description: "Population count as of 2023"

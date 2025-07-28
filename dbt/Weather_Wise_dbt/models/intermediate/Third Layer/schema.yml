@@ -1,0 +1,101 @@
+version: 2
+
+models:
+  - name: int3_station_obs_qc
+    description: "Station-level quality control metrics summarizing coverage, gaps, completeness, consistency, and range checks for merged daily/hourly data."
+    columns:
+      - name: station_id
+        description: "Unique identifier for the weather station"
+#        tests:
+#          - unique
+#          - not_null
+      - name: station_name
+        description: "Human-readable name of the station"
+      - name: country_code
+        description: "ISO country code of the station"
+      - name: region_code
+        description: "State or region code of the station"
+      - name: wmo_id
+        description: "World Meteorological Organization station identifier"
+      - name: icao_code
+        description: "ICAO code of the station"
+      - name: latitude
+        description: "Latitude of the station in decimal degrees"
+      - name: longitude
+        description: "Longitude of the station in decimal degrees"
+      - name: elevation
+        description: "Elevation of the station above sea level in meters"
+      - name: timezone
+        description: "IANA timezone of the station"
+      - name: first_obs_date
+        description: "Earliest observation date for the station"
+#        tests:
+#          - not_null
+      - name: last_obs_date
+        description: "Latest observation date for the station"
+#        tests:
+#          - not_null
+      - name: total_days
+        description: "Count of distinct days with any observation record"
+      - name: data_span_days
+        description: "Total span in days between first_obs_date and last_obs_date, inclusive"
+      - name: percent_days_reported
+        description: "Percentage of days within the span that have at least one observation"
+      - name: total_gap_days
+        description: "Number of days with no record or where tavg_f is null"
+      - name: long_gap_count
+        description: "Number of gap periods of at least 30 consecutive days"
+      - name: pct_gap_days
+        description: "Percentage of gap days relative to the total span"
+      - name: days_both_tavg_f
+        description: "Days where tavg_f is present in both daily and hourly sources"
+      - name: days_only_daily_tavg_f
+        description: "Days where tavg_f is present only in the daily source"
+      - name: days_only_hourly_tavg_f
+        description: "Days where tavg_f is present only in the hourly source"
+      - name: pct_matched_tavg_f
+        description: "Proportion of 'both' days where hourly and daily tavg_f have a percent-diff record"
+      - name: pct_matched_tmin_f
+        description: "Proportion of 'both' days where hourly and daily tmin_f have a percent-diff record"
+      - name: pct_matched_tmax_f
+        description: "Proportion of 'both' days where hourly and daily tmax_f have a percent-diff record"
+      - name: pct_matched_precipitation_mm
+        description: "Proportion of 'both' days where hourly and daily precipitation_mm have a percent-diff record"
+      - name: x_cnt_tavg_f
+        description: "Count of 'both' days where hourly and daily tavg_f percent-diff did not exist (inconsistency)"
+      - name: x_cnt_tmin_f
+        description: "Count of 'both' days where hourly and daily tmin_f percent-diff did not exist (inconsistency)"
+      - name: x_cnt_tmax_f
+        description: "Count of 'both' days where hourly and daily tmax_f percent-diff did not exist (inconsistency)"
+      - name: x_cnt_precipitation_mm
+        description: "Count of 'both' days where hourly and daily precipitation_mm percent-diff did not exist (inconsistency)"
+      - name: avg_abs_diff_tavg_f
+        description: "Average absolute difference between hourly and daily tavg_f (°F)"
+      - name: max_abs_diff_tavg_f
+        description: "Maximum absolute difference between hourly and daily tavg_f (°F)"
+      - name: avg_abs_diff_tmin_f
+        description: "Average absolute difference between hourly and daily tmin_f (°F)"
+      - name: max_abs_diff_tmin_f
+        description: "Maximum absolute difference between hourly and daily tmin_f (°F)"
+      - name: avg_abs_diff_tmax_f
+        description: "Average absolute difference between hourly and daily tmax_f (°F)"
+      - name: max_abs_diff_tmax_f
+        description: "Maximum absolute difference between hourly and daily tmax_f (°F)"
+      - name: avg_diff_tavg_f
+        description: "Average signed difference (hourly – daily) for tavg_f (°F)"
+      - name: avg_diff_tmin_f
+        description: "Average signed difference (hourly – daily) for tmin_f (°F)"
+      - name: avg_diff_tmax_f
+        description: "Average signed difference (hourly – daily) for tmax_f (°F)"
+      - name: count_zero_precip_days
+        description: "Count of days where merged precipitation_mm = 0"
+      - name: count_no_sunshine_days
+        description: "Count of days where merged sunshine_minutes = 0"
+      - name: count_out_of_range_tavg_f
+        description: "Count of days where tavg_f is outside the range -90 to 140 °F"
+      - name: count_out_of_range_tmin_f
+        description: "Count of days where tmin_f is outside the range -90 to 140 °F"
+      - name: count_out_of_range_tmax_f
+        description: "Count of days where tmax_f is outside the range -90 to 140 °F"
+
+

@@ -1,0 +1,227 @@
+version: 2
+
+
+models:
+  - name: int2_obs_daily_all_qc
+    description: "Combine daily and hourly summaries into a single daily view, merging metrics, tracking source flags, and computing percent differences in Fahrenheit and other units."
+    columns:
+      - name: station_date_id
+        description: "Surrogate key combining station_id and obs_date"
+#        tests:
+#          - unique
+#          - not_null
+      - name: station_id
+        description: "Identifier for the weather station"
+#        tests:
+#          - not_null
+      - name: obs_date
+        description: "Date of the observation"
+#        tests:
+#          - not_null
+      - name: tavg_f
+        description: "Average temperature in Fahrenheit"
+      - name: tmin_f
+        description: "Minimum temperature in Fahrenheit"
+      - name: tmax_f
+        description: "Maximum temperature in Fahrenheit"
+      - name: avg_dwpt_f
+        description: "Average dew point in Fahrenheit"
+      - name: avg_rhum_pct
+        description: "Average relative humidity in percent"
+      - name: min_rhum_pct
+        description: "Minimum relative humidity in percent"
+      - name: max_rhum_pct
+        description: "Maximum relative humidity in percent"
+      - name: avg_air_pressure_hpa
+        description: "Average air pressure in hectopascals"
+      - name: avg_wind_dir_degrees
+        description: "Average wind direction in degrees"
+      - name: avg_wind_speed_km_h
+        description: "Average wind speed in kilometers per hour"
+      - name: max_wind_peak_gust_km_h
+        description: "Peak gust wind speed in kilometers per hour"
+      - name: precipitation_mm
+        description: "Total precipitation in millimeters"
+      - name: snow_mm
+        description: "Total snowfall in millimeters"
+      - name: wind_dir_degrees
+        description: "Merged wind direction in degrees"
+      - name: wind_speed_km_h
+        description: "Merged wind speed in kilometers per hour"
+      - name: wind_peak_gust_km_h
+        description: "Merged peak gust wind speed in kilometers per hour"
+      - name: air_pressure_hpa
+        description: "Merged air pressure in hectopascals"
+      - name: sunshine_minutes
+        description: "Total sunshine duration in minutes"
+      - name: tavg_f_source
+        description: "Source of tavg_f: 'daily', 'hourly', or 'both'"
+      - name: tmin_f_source
+        description: "Source of tmin_f: 'daily', 'hourly', or 'both'"
+      - name: tmax_f_source
+        description: "Source of tmax_f: 'daily', 'hourly', or 'both'"
+      - name: precipitation_mm_source
+        description: "Source of precipitation_mm: 'daily', 'hourly', or 'both'"
+      - name: snow_mm_source
+        description: "Source of snow_mm: 'daily', 'hourly', or 'both'"
+      - name: wind_dir_degrees_source
+        description: "Source of wind_dir_degrees: 'daily', 'hourly', or 'both'"
+      - name: wind_speed_km_h_source
+        description: "Source of wind_speed_km_h: 'daily', 'hourly', or 'both'"
+      - name: wind_peak_gust_km_h_source
+        description: "Source of wind_peak_gust_km_h: 'daily', 'hourly', or 'both'"
+      - name: air_pressure_hpa_source
+        description: "Source of air_pressure_hpa: 'daily', 'hourly', or 'both'"
+      - name: sunshine_minutes_source
+        description: "Source of sunshine_minutes: 'daily', 'hourly', or 'both'"
+      - name: tavg_f_diff_pct
+        description: "Percent difference of hourly vs daily tavg_f ((hourly - daily) / daily * 100)"
+      - name: tmin_f_diff_pct
+        description: "Percent difference of hourly vs daily tmin_f ((hourly - daily) / daily * 100)"
+      - name: tmax_f_diff_pct
+        description: "Percent difference of hourly vs daily tmax_f ((hourly - daily) / daily * 100)"
+      - name: precipitation_mm_diff_pct
+        description: "Percent difference of hourly vs daily precipitation_mm ((hourly - daily) / daily * 100)"
+      - name: snow_mm_diff_pct
+        description: "Percent difference of hourly vs daily snow_mm ((hourly - daily) / daily * 100)"
+      - name: wind_dir_degrees_diff_pct
+        description: "Percent difference of hourly vs daily wind_dir_degrees ((hourly - daily) / daily * 100)"
+      - name: wind_speed_km_h_diff_pct
+        description: "Percent difference of hourly vs daily wind_speed_km_h ((hourly - daily) / daily * 100)"
+      - name: wind_peak_gust_km_h_diff_pct
+        description: "Percent difference of hourly vs daily wind_peak_gust_km_h ((hourly - daily) / daily * 100)"
+      - name: air_pressure_hpa_diff_pct
+        description: "Percent difference of hourly vs daily air_pressure_hpa ((hourly - daily) / daily * 100)"
+      - name: sunshine_minutes_diff_pct
+        description: "Percent difference of hourly vs daily sunshine_minutes ((hourly - daily) / daily * 100)"
+
+  - name: int2_obs_daily_all
+    description: "Combine daily and hourly summaries into a single daily view, merging metrics, tracking source flags, and computing percent differences in Fahrenheit and other units."
+    columns:
+      - name: station_date_id
+        description: "Surrogate key combining station_id and obs_date"
+#        tests:
+#          - unique
+#          - not_null
+      - name: station_id
+        description: "Identifier for the weather station"
+#        tests:
+#          - not_null
+      - name: obs_date
+        description: "Date of the observation"
+#        tests:
+#          - not_null
+      - name: tavg_f
+        description: "Average temperature in Fahrenheit"
+      - name: tmin_f
+        description: "Minimum temperature in Fahrenheit"
+      - name: tmax_f
+        description: "Maximum temperature in Fahrenheit"
+      - name: avg_dwpt_f
+        description: "Average dew point in Fahrenheit"
+      - name: avg_rhum_pct
+        description: "Average relative humidity in percent"
+      - name: avg_air_pressure_hpa
+        description: "Average air pressure in hectopascals"
+      - name: avg_wind_dir_degrees
+        description: "Average wind direction in degrees"
+      - name: avg_wind_speed_km_h
+        description: "Average wind speed in kilometers per hour"
+      - name: max_wind_peak_gust_km_h
+        description: "Peak gust wind speed in kilometers per hour"
+      - name: precipitation_mm
+        description: "Total precipitation in millimeters"
+      - name: snow_mm
+        description: "Total snowfall in millimeters"
+      - name: wind_dir_degrees
+        description: "Merged wind direction in degrees"
+      - name: wind_speed_km_h
+        description: "Merged wind speed in kilometers per hour"
+      - name: wind_peak_gust_km_h
+        description: "Merged peak gust wind speed in kilometers per hour"
+      - name: air_pressure_hpa
+        description: "Merged air pressure in hectopascals"
+      - name: sunshine_minutes
+        description: "Total sunshine duration in minutes"
+
+  - name: int2_station_city_match
+    description: "Match weather stations (stg_obs_stations) to nearby cities (int1_city_coord_and_pop) within a 100-mile radius using the Haversine formula and include proximity rankings."
+    columns:
+      - name: station_city_match_id
+        description: "Surrogate key for each station-city match"
+#        tests:
+#          - unique
+#          - not_null
+
+      - name: station_id
+        description: "Identifier for the weather station"
+#        tests:
+#          - not_null
+      - name: station_name
+        description: "Human-readable name of the station"
+      - name: country_code
+        description: "ISO country code for the station"
+      - name: region_code
+        description: "State or region code for the station"
+      - name: wmo_id
+        description: "World Meteorological Organization station identifier"
+      - name: icao_code
+        description: "ICAO code for the station"
+      - name: station_latitude
+        description: "Latitude of the station in decimal degrees"
+      - name: station_longitude
+        description: "Longitude of the station in decimal degrees"
+      - name: elevation
+        description: "Elevation of the station above sea level in meters"
+      - name: timezone
+        description: "IANA timezone of the station"
+      - name: hourly_start_date
+        description: "First date with hourly observations"
+      - name: hourly_end_date
+        description: "Last date with hourly observations"
+      - name: daily_start_date
+        description: "First date with daily observations"
+      - name: daily_end_date
+        description: "Last date with daily observations"
+      - name: monthly_start_date
+        description: "First date with monthly observations"
+      - name: monthly_end_date
+        description: "Last date with monthly observations"
+      - name: snapshot_time
+        description: "Timestamp when station metadata was last refreshed"
+
+      - name: city_coord_pop_id
+        description: "Surrogate key for the city coordinate and population record"
+      - name: uace
+        description: "Unique area code for the city"
+      - name: city_pop_id
+        description: "Original population table key for the city"
+      - name: total_matched_chars
+        description: "Total matched character count from fuzzy matching"
+      - name: matched_token_count
+        description: "Matched token count from fuzzy matching"
+      - name: total_matched_chars_no_city
+        description: "Matched character count excluding the word 'city'"
+      - name: matched_token_count_no_city
+        description: "Matched token count excluding the word 'city'"
+      - name: pop_city_name
+        description: "City name from the population table"
+      - name: population_2023
+        description: "Population of the city in 2023"
+      - name: coord_city_name
+        description: "City name from the coordinate table"
+      - name: city_area_land_sqm
+        description: "City land area in square meters"
+      - name: city_area_water_sqm
+        description: "City water area in square meters"
+      - name: city_latitude
+        description: "Latitude of the city centroid in decimal degrees"
+      - name: city_longitude
+        description: "Longitude of the city centroid in decimal degrees"
+
+      - name: distance_miles
+        description: "Great-circle distance between station and city in miles"
+      - name: station_to_city_proximity_rank
+        description: "Rank of the city by proximity to its station (1 is closest)"
+      - name: city_to_station_proximity_rank
+        description: "Rank of the station by proximity to its city (1 is closest)"
