@@ -1,0 +1,39 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache
+
+
+# Logs and outputs
+*.log
+logs/
+
+# Airflow SQLite DB and local DuckDB
+*.db
+
+# all data
+data/
+
+# Local environment
+.env
+
+# VSCode or PyCharm files
+.vscode/
+.idea/
+
+# Python packages
+*.egg-info/
+dist/
+build/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# DAG run files 
+airflow-webserver.pid
+
+# Airflow configuration files
+airflow.cfg
+unittests.cfg
