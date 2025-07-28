@@ -1,6 +1,5 @@
 {{ config(
-    materialized = "table",
-    unique_key   = "station_date_id"
+    materialized = "table"
 ) }}
 --todo: add checkpoint in cofig
 with
@@ -12,13 +11,14 @@ raw as (
 
 final as (
     select
-        station_date_id,
         station_id,
         obs_date,
         tavg_f,
         tmin_f,
         tmax_f,
         avg_dwpt_f,
+        min_dwpt_f,
+        max_dwpt_f,
         avg_rhum_pct,
         min_rhum_pct,
         max_rhum_pct,

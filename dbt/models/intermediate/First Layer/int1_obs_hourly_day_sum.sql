@@ -30,6 +30,8 @@ aggregated as (
       max(temp_f) as tmax_f,
       -- dew point
       avg(dwpt_f) as avg_dwpt_f,
+      min(dwpt_f) as min_dwpt_f,
+      max(dwpt_f) as max_dwpt_f,
       -- humidity & pressure
       avg(rhum_pct)        as avg_rhum_pct,
       min(rhum_pct)        as min_rhum_pct,

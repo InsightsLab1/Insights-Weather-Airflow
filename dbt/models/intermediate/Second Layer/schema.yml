@@ -26,6 +26,10 @@ models:
         description: "Maximum temperature in Fahrenheit"
       - name: avg_dwpt_f
         description: "Average dew point in Fahrenheit"
+      - name: min_dwpt_f
+        description: "Minimum dew point in Fahrenheit"
+      - name: max_dwpt_f
+        description: "Maximum dew point in Fahrenheit"
       - name: avg_rhum_pct
         description: "Average relative humidity in percent"
       - name: min_rhum_pct
@@ -119,6 +123,10 @@ models:
         description: "Maximum temperature in Fahrenheit"
       - name: avg_dwpt_f
         description: "Average dew point in Fahrenheit"
+      - name: min_dwpt_f
+        description: "Minimum dew point in Fahrenheit"
+      - name: max_dwpt_f
+        description: "Maximum dew point in Fahrenheit"
       - name: avg_rhum_pct
         description: "Average relative humidity in percent"
       - name: avg_air_pressure_hpa

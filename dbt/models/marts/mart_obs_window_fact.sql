@@ -1,5 +1,5 @@
 {{ config(
-    materialized = "table",
+    materialized = "view",
     unique_key   = "station_anchor_obs_id"
 ) }}
 --todo: add checkpoint in cofig

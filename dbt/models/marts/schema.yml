@@ -1,0 +1,396 @@
+
+models:
+  - name: mart_city_dim
+    description: "Dimension table for cities, combining coordinate and population data."
+    columns:
+      - name: city_coord_pop_id
+        description: "Surrogate key for the city coordinate & population record."
+        tests:
+          - unique
+          - not_null
+      - name: area_code
+        description: "Unified area code (from uace)."
+      - name: pop_city_id
+        description: "Population source city identifier (from city_pop_id)."
+      - name: population_city
+        description: "City name as reported by the population source."
+      - name: population
+        description: "Total city population as of 2023."
+      - name: coordinate_city
+        description: "City name as reported by the coordinate source."
+      - name: land_area_sqm
+        description: "Land area of the city footprint, in square meters."
+      - name: water_area_sqm
+        description: "Water area within the city boundaries, in square meters."
+      - name: latitude
+        description: "Latitude of the city centroid."
+      - name: longitude
+        description: "Longitude of the city centroid."
+      - name: match_chars
+        description: "Total matched characters between the two city-name sources."
+      - name: match_tokens
+        description: "Total matched tokens between the two city-name sources."
+      - name: match_chars_no_city
+        description: "Matched-character count excluding the word 'city'."
+      - name: match_tokens_no_city
+        description: "Matched-token count excluding the word 'city'."
+
+  - name: mart_city_station_bridge
+    description: "Bridge table linking weather stations to city dimension records, including matching metrics and proximity ranks."
+    columns:
+      - name: station_city_match_id
+        description: "Surrogate key for each station-to-city match record."
+        tests:
+          - unique
+          - not_null
+      - name: station_id
+        description: "Primary identifier for the weather station."
+        tests:
+          - not_null
+      - name: station_name
+        description: "Official name of the weather station."
+      - name: country_code
+        description: "ISO 3166-1 alpha-2 country code of the station."
+      - name: region_code
+        description: "Region (state/province) code where the station is located."
+      - name: wmo
+        description: "World Meteorological Organization station identifier."
+      - name: icao
+        description: "International Civil Aviation Organization station code."
+      - name: station_latitude
+        description: "Latitude of the station in decimal degrees."
+      - name: station_longitude
+        description: "Longitude of the station in decimal degrees."
+      - name: elevation
+        description: "Elevation of the station above sea level, in meters."
+      - name: timezone
+        description: "IANA timezone of the station."
+      - name: hourly_start
+        description: "Date when hourly observations begin."
+      - name: hourly_end
+        description: "Date when hourly observations end."
+      - name: daily_start
+        description: "Date when daily observations begin."
+      - name: daily_end
+        description: "Date when daily observations end."
+      - name: monthly_start
+        description: "Date when monthly observations begin."
+      - name: monthly_end
+        description: "Date when monthly observations end."
+      - name: station_snapshot_time
+        description: "Timestamp when this station's metadata was last snapshot."
+      - name: city_dim_id
+        description: "Foreign key referencing mart_city_dim.city_coord_pop_id."
+        tests:
+          - relationships:
+              to: ref('mart_city_dim')
+              field: city_coord_pop_id
+      - name: area_code
+        description: "Unified area code (from city matching)."
+      - name: pop_city_id
+        description: "City identifier from the population source."
+      - name: match_chars
+        description: "Total number of characters matched between station and city names."
+      - name: match_tokens
+        description: "Total number of tokens matched between station and city names."
+      - name: match_chars_no_city
+        description: "Matched character count excluding the substring 'city'."
+      - name: match_tokens_no_city
+        description: "Matched token count excluding the token 'city'."
+      - name: population_city
+        description: "City name as reported by the population source."
+      - name: population
+        description: "Total city population as of 2023."
+      - name: coordinate_city
+        description: "City name as reported by the coordinate source."
+      - name: land_area_sqm
+        description: "City land area in square meters."
+      - name: water_area_sqm
+        description: "City water area in square meters."
+      - name: city_latitude
+        description: "Latitude of the city centroid."
+      - name: city_longitude
+        description: "Longitude of the city centroid."
+      - name: distance_miles
+        description: "Great-circle distance in miles between station and city centroid."
+      - name: station_proximity_rank
+        description: "Rank of this station among all stations by proximity to the city."
+      - name: city_proximity_rank
+        description: "Rank of this city among all cities by proximity to the station."
+
+
+  - name: mart_date_dim
+    description: "Dimension table for dates with standard date parts."
+    columns:
+      - name: date_key
+        description: "Surrogate key for each date (YYYYMMDD)."
+        tests:
+          - unique
+          - not_null
+      - name: year
+        description: "Four-digit year."
+      - name: month
+        description: "Month number (1-12)."
+      - name: day_of_month
+        description: "Day of month (1-31)."
+      - name: week_of_month
+        description: "Week of month (1-5)."
+      - name: day_of_year
+        description: "Day of year (1-366)."
+      - name: week_of_year
+        description: "ISO week of year (1-53)."
+      - name: weekday
+        description: "Day of week (1=Monday through 7=Sunday)."
+
+  - name: mart_hour_dim
+    description: "Dimension table for hours of the day with labels."
+    columns:
+      - name: hour
+        description: "Hour of day (0-23)."
+        tests:
+          - unique
+          - not_null
+      - name: hour_label
+        description: 'Readable label for the hour (e.g., "00:00-01:00", "1 AM", etc.).'
+
+  - name: mart_obs_fact
+    description: "Fact table containing daily weather observations for each station."
+    columns:
+      - name: station_id
+        description: "Identifier for the weather station."
+        tests:
+          - not_null
+      - name: obs_date
+        description: "Date of the observation."
+        tests:
+          - not_null
+      - name: tavg_f
+        description: "Average temperature in degrees Fahrenheit."
+      - name: tmin_f
+        description: "Minimum temperature in degrees Fahrenheit."
+      - name: tmax_f
+        description: "Maximum temperature in degrees Fahrenheit."
+      - name: avg_dwpt_f
+        description: "Average dew point in Fahrenheit"
+      - name: min_dwpt_f
+        description: "Minimum dew point in Fahrenheit"
+      - name: max_dwpt_f
+        description: "Maximum dew point in Fahrenheit"
+      - name: avg_rhum_pct
+        description: "Average relative humidity percentage."
+      - name: min_rhum_pct
+        description: "Minimum relative humidity percentage."
+      - name: max_rhum_pct
+        description: "Maximum relative humidity percentage."
+      - name: precip_mm
+        description: "Total precipitation in millimeters."
+      - name: snow_mm
+        description: "Total snowfall in millimeters."
+      - name: wind_dir_deg
+        description: "Wind direction in degrees."
+      - name: wind_speed_kmh
+        description: "Wind speed in kilometers per hour."
+      - name: wind_gust_kmh
+        description: "Peak wind gust in kilometers per hour."
+      - name: pressure_hpa
+        description: "Air pressure in hectopascals."
+      - name: sunshine_min
+        description: "Total minutes of sunshine."
+
+  - name: mart_obs_window_fact
+    description: "Fact table containing daily weather observations relative to an anchor date."
+    columns:
+      - name: station_anchor_obs_id
+        description: "Primary key for station anchor observation window records."
+        tests:
+          - unique
+          - not_null
+      - name: station_anchor_id
+        description: "Surrogate key generated for station_id, anchor_date, and obs_date."
+        tests:
+          - not_null
+      - name: station_id
+        description: "Identifier for the weather station."
+        tests:
+          - not_null
+      - name: anchor_date
+        description: "Anchor date for the observation window."
+      - name: obs_date
+        description: "Date of the observation within the anchor window."
+      - name: tavg_f
+        description: "Average temperature in degrees Fahrenheit."
+      - name: tmin_f
+        description: "Minimum temperature in degrees Fahrenheit."
+      - name: tmax_f
+        description: "Maximum temperature in degrees Fahrenheit."
+      - name: avg_dwpt_f
+        description: "Average dew point in degrees Fahrenheit."
+      - name: avg_rhum_pct
+        description: "Average relative humidity percentage."
+      - name: min_rhum_pct
+        description: "Minimum relative humidity percentage."
+      - name: max_rhum_pct
+        description: "Maximum relative humidity percentage."
+      - name: precip_mm
+        description: "Total precipitation in millimeters."
+      - name: snow_mm
+        description: "Total snowfall in millimeters."
+      - name: wind_dir_deg
+        description: "Wind direction in degrees."
+      - name: wind_speed_kmh
+        description: "Wind speed in kilometers per hour."
+      - name: wind_gust_kmh
+        description: "Peak wind gust in kilometers per hour."
+      - name: pressure_hpa
+        description: "Air pressure in hectopascals."
+      - name: sunshine_min
+        description: "Total minutes of sunshine."
+
+  - name: mart_stations_dim
+    description: "Dimension table for weather station metadata."
+    columns:
+      - name: station_id
+        description: "Identifier for the weather station."
+        tests:
+          - unique
+          - not_null
+      - name: station_name
+        description: "Official name of the weather station."
+      - name: country_code
+        description: "ISO 3166-1 alpha-2 country code for station location."
+      - name: region_code
+        description: "Region code (state or province) where the station is located."
+      - name: wmo_id
+        description: "World Meteorological Organization station identifier."
+      - name: icao_code
+        description: "International Civil Aviation Organization station code."
+      - name: latitude
+        description: "Latitude of the station in decimal degrees."
+      - name: longitude
+        description: "Longitude of the station in decimal degrees."
+      - name: elevation
+        description: "Elevation of the station above sea level in meters."
+      - name: timezone
+        description: "IANA time zone of the station."
+      - name: hourly_start_date
+        description: "Date when hourly observations begin."
+      - name: hourly_end_date
+        description: "Date when hourly observations end."
+      - name: daily_start_date
+        description: "Date when daily observations begin."
+      - name: daily_end_date
+        description: "Date when daily observations end."
+      - name: monthly_start_date
+        description: "Date when monthly observations begin."
+      - name: monthly_end_date
+        description: "Date when monthly observations end."
+      - name: snapshot_time
+        description: "Timestamp when station metadata was last snapshotted."
+
+  - name: mart_station_obs_qc_obt
+    description: "Quality control summary of station observations, comparing daily and hourly data consistency."
+    columns:
+      - name: station_id
+        description: "Identifier for the weather station."
+        tests:
+          - unique
+          - not_null
+      - name: station_name
+        description: "Official name of the weather station."
+      - name: country_code
+        description: "ISO 3166-1 alpha-2 country code of the station."
+      - name: region_code
+        description: "Region (state/province) code where the station is located."
+      - name: wmo_id
+        description: "World Meteorological Organization station identifier."
+      - name: icao_code
+        description: "International Civil Aviation Organization station code."
+      - name: station_latitude
+        description: "Latitude of the station in decimal degrees."
+      - name: station_longitude
+        description: "Longitude of the station in decimal degrees."
+      - name: elevation
+        description: "Elevation of the station above sea level in meters."
+      - name: timezone
+        description: "IANA timezone of the station."
+      - name: hourly_start_date
+        description: "Date when hourly observations begin."
+      - name: hourly_end_date
+        description: "Date when hourly observations end."
+      - name: daily_start_date
+        description: "Date when daily observations begin."
+      - name: daily_end_date
+        description: "Date when daily observations end."
+      - name: monthly_start_date
+        description: "Date when monthly observations begin."
+      - name: monthly_end_date
+        description: "Date when monthly observations end."
+      - name: station_snapshot_time
+        description: "Timestamp when station metadata was last snapshotted."
+      - name: first_obs_date
+        description: "Date of the first valid observation in the QC period."
+      - name: last_obs_date
+        description: "Date of the last valid observation in the QC period."
+      - name: total_days
+        description: "Total number of days in the QC period."
+      - name: data_span_days
+        description: "Span in days between first and last observation."
+      - name: percent_days_reported
+        description: "Percentage of days with at least one reported observation."
+      - name: total_gap_days
+        description: "Number of days with no observations."
+      - name: long_gap_count
+        description: "Count of continuous missing-data gaps."
+      - name: pct_gap_days
+        description: "Percentage of days with missing data."
+      - name: days_both_tavg_f
+        description: "Days where both daily and hourly average temperatures are available."
+      - name: days_only_daily_tavg_f
+        description: "Days where only the daily average temperature is available."
+      - name: days_only_hourly_tavg_f
+        description: "Days where only the hourly average temperature is available."
+      - name: pct_matched_tavg_f
+        description: "Percentage of days where daily and hourly average temperatures match."
+      - name: pct_matched_tmin_f
+        description: "Percentage of days where daily and hourly minimum temperatures match."
+      - name: pct_matched_tmax_f
+        description: "Percentage of days where daily and hourly maximum temperatures match."
+      - name: pct_matched_precipitation_mm
+        description: "Percentage of days where daily and hourly precipitation values match."
+      - name: x_cnt_tavg_f
+        description: "Count of mismatches or outliers for average temperature."
+      - name: x_cnt_tmin_f
+        description: "Count of mismatches or outliers for minimum temperature."
+      - name: x_cnt_tmax_f
+        description: "Count of mismatches or outliers for maximum temperature."
+      - name: x_cnt_precipitation_mm
+        description: "Count of mismatches or outliers for precipitation."
+      - name: avg_abs_diff_tavg_f
+        description: "Average absolute difference between daily and hourly average temperatures."
+      - name: max_abs_diff_tavg_f
+        description: "Maximum absolute difference between daily and hourly average temperatures."
+      - name: avg_abs_diff_tmin_f
+        description: "Average absolute difference between daily and hourly minimum temperatures."
+      - name: max_abs_diff_tmin_f
+        description: "Maximum absolute difference between daily and hourly minimum temperatures."
+      - name: avg_abs_diff_tmax_f
+        description: "Average absolute difference between daily and hourly maximum temperatures."
+      - name: max_abs_diff_tmax_f
+        description: "Maximum absolute difference between daily and hourly maximum temperatures."
+      - name: avg_diff_tavg_f
+        description: "Average signed difference between daily and hourly average temperatures."
+      - name: avg_diff_tmin_f
+        description: "Average signed difference between daily and hourly minimum temperatures."
+      - name: avg_diff_tmax_f
+        description: "Average signed difference between daily and hourly maximum temperatures."
+      - name: count_zero_precip_days
+        description: "Count of days with zero precipitation."
+      - name: count_no_sunshine_days
+        description: "Count of days with no sunshine recorded."
+      - name: count_out_of_range_tavg_f
+        description: "Count of days with average temperature outside valid range."
+      - name: count_out_of_range_tmin_f
+        description: "Count of days with minimum temperature outside valid range."
+      - name: count_out_of_range_tmax_f
+        description: "Count of days with maximum temperature outside valid range."
+

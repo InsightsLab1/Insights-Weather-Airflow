@@ -29,6 +29,8 @@ date_windows as (
     obs.tmin_f,
     obs.tmax_f,
     obs.avg_dwpt_f,
+    obs.min_dwpt_f,
+    obs.max_dwpt_f,
     obs.avg_rhum_pct,
     obs.min_rhum_pct,
     obs.max_rhum_pct,

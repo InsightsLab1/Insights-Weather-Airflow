@@ -1,6 +1,9 @@
 {{ config(
-    materialized = "table",
-    unique_key   = "city_coord_pop_id"
+    materialized='table',
+    unique_key='city_coord_pop_id',
+    post_hook=[
+      "COPY (SELECT * FROM {{ this }}) TO 'C:/Data Projects/Weather Data Project/Data Lakehouse/parquet/mart_city_dim.parquet' (FORMAT PARQUET)"
+    ]
 ) }}
 
 with

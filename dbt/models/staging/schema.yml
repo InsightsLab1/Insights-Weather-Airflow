@@ -75,6 +75,8 @@ models:
         description: "Last available date of monthly data for this station"
       - name: snapshot_time
         description: "Timestamp when the station data was last refreshed"
+      - name: region_name
+        description: "Full name of the region or state where the station is located"
 
   - name: stg_obs_hourly
     description: "hourly weather observations"

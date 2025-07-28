@@ -19,6 +19,10 @@ models:
         description: "Minimum temperature in Fahrenheit for the day"
       - name: avg_dwpt_f
         description: "Average dew point in Fahrenheit"
+      - name: min_dwpt_f
+        description: "Minimum dew point in Fahrenheit"
+      - name: max_dwpt_f
+        description: "Maximum dew point in Fahrenheit"
       - name: avg_rhum_pct
         description: "Average relative humidity (%)"
       - name: min_rhum_pct
@@ -80,9 +84,9 @@ models:
     columns:
       - name: city_coord_pop_id
         description: "Surrogate key combining uace and city_pop_id for the matched record"
-#        tests:
-#          - unique
-#          - not_null
+        tests:
+          - unique
+          - not_null
       - name: uace
         description: "Unique area code identifier from coordinate data"
       - name: city_pop_id
